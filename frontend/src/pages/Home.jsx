@@ -39,15 +39,17 @@ export const Home = () => {
       <nav className="border-b border-slate-200/80 bg-white/80 backdrop-blur-md sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-navy-900 via-indigo-700 to-purple-600 flex items-center justify-center text-white shadow-md shadow-indigo-500/20">
-              <Wrench className="w-5 h-5" />
-            </div>
+            <img
+              src="/logo.jpg"
+              alt="Unifix Logo"
+              className="w-11 h-11 rounded-2xl object-cover shadow-md shadow-indigo-500/20 border border-indigo-200/50"
+            />
             <div>
               <span className="text-lg font-extrabold tracking-tight bg-gradient-to-r from-navy-900 to-indigo-700 bg-clip-text text-transparent">
-                Campus TechCare
+                Unifix
               </span>
               <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                Smart Campus Maintenance
+                Campus Tech Care
               </span>
             </div>
           </div>

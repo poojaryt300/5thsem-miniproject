@@ -92,15 +92,17 @@ export const Navbar = ({ toggleSidebar, showSidebarToggle = false }) => {
             )}
 
             <Link to="/" className="flex items-center gap-2.5 group">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-navy-900 via-indigo-700 to-purple-600 flex items-center justify-center text-white shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform">
-                <Wrench className="w-5 h-5" />
-              </div>
+              <img
+                src="/logo.jpg"
+                alt="Unifix Logo"
+                className="w-10 h-10 rounded-xl object-cover shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform border border-indigo-200/50"
+              />
               <div className="leading-tight">
                 <span className="text-lg font-extrabold tracking-tight bg-gradient-to-r from-navy-900 to-indigo-700 bg-clip-text text-transparent">
-                  Campus TechCare
+                  Unifix
                 </span>
                 <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                  Smart Maintenance
+                  Campus Tech Care
                 </span>
               </div>
             </Link>
