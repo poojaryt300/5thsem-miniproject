@@ -34,7 +34,24 @@ app.get('/api/health', (req, res) => {
 });
 
 // Mount Routes
-app.use('/api/auth', require('./routes/authRoutes'));
+const authRoutes = require('./routes/authRoutes');
+const { login, register } = require('./controllers/authController');
+
+app.use('/api/auth', authRoutes);
+app.use('/api', authRoutes);
+
+// Direct top-level login/register fallbacks
+app.post('/login', login);
+app.post('/signin', login);
+app.post('/sign-in', login);
+app.post('/register', register);
+app.post('/signup', register);
+app.post('/sign-up', register);
+
+// Redirect browser GETs on API auth paths to frontend UI
+app.get(['/api/login', '/api/signin', '/api/sign-in', '/api/auth/login', '/api/auth/signin'], (req, res) => res.redirect('/login'));
+app.get(['/api/register', '/api/signup', '/api/sign-up', '/api/auth/register', '/api/auth/signup'], (req, res) => res.redirect('/register'));
+
 app.use('/api/complaints', require('./routes/complaintRoutes'));
 app.use('/api/rooms', require('./routes/roomRoutes'));
 app.use('/api/equipment', require('./routes/equipmentRoutes'));

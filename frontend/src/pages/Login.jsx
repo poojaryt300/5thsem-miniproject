@@ -46,15 +46,17 @@ export const Login = () => {
     <div className="min-h-screen bg-slate-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
         <Link to="/" className="inline-flex items-center gap-2.5 mb-4 group">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-navy-900 via-indigo-700 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform">
-            <Wrench className="w-6 h-6" />
-          </div>
+          <img
+            src="/logo.jpg"
+            alt="Unifix Logo"
+            className="w-16 h-16 rounded-2xl object-cover shadow-lg shadow-indigo-500/25 border-2 border-indigo-200/50 group-hover:scale-105 transition-transform"
+          />
         </Link>
         <h2 className="text-2xl font-black text-slate-900 tracking-tight">
-          Sign In to Campus TechCare
+          Sign In to Unifix
         </h2>
         <p className="mt-1 text-xs text-slate-500">
-          Enter your institutional credentials to access your dashboard
+          Campus Tech Care • Instant Maintenance Management
         </p>
       </div>
 

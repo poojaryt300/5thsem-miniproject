@@ -1,4 +1,4 @@
-import React from 'react';
+          import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { NotificationProvider } from './context/NotificationContext';
@@ -32,7 +32,14 @@ function App() {
             {/* Public Routes */}
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/signin" element={<Login />} />
+            <Route path="/sign-in" element={<Login />} />
+            <Route path="/sign" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/signup" element={<Register />} />
+            <Route path="/sign-up" element={<Register />} />
+            <Route path="/auth/login" element={<Login />} />
+            <Route path="/auth/register" element={<Register />} />
 
             {/* Dashboard redirector */}
             <Route
