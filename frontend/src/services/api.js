@@ -19,10 +19,37 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Response interceptor: handle 401 unauthenticated
+// Response interceptor: auto-retry on proxy 404 & handle 401 unauthenticated
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
+  async (error) => {
+    const originalRequest = error.config;
+    // If request failed with 404 or Network Error on proxy /api, retry directly to backend ports
+    if ((!error.response || error.response.status === 404) && originalRequest && !originalRequest._retry) {
+      originalRequest._retry = true;
+      const fallbackBases = ['http://127.0.0.1:5000/api', 'http://127.0.0.1:5001/api'];
+      for (const fallbackBase of fallbackBases) {
+        try {
+          let directPath = originalRequest.url || '';
+          if (directPath.startsWith('/api')) {
+            directPath = directPath.replace(/^\/api/, '');
+          }
+          if (!directPath.startsWith('/')) directPath = '/' + directPath;
+          const directUrl = `${fallbackBase}${directPath}`;
+
+          return await axios({
+            ...originalRequest,
+            baseURL: undefined,
+            url: directUrl
+          });
+        } catch (retryErr) {
+          if (retryErr.response && retryErr.response.status !== 404) {
+            return Promise.reject(retryErr);
+          }
+        }
+      }
+    }
+
     if (error.response && error.response.status === 401) {
       // Optional auto logout or trigger event
       const currentPath = window.location.pathname;

@@ -14,6 +14,12 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Request Logger
+app.use((req, res, next) => {
+  console.log(`[${new Date().toLocaleTimeString()}] ${req.method} ${req.originalUrl}`);
+  next();
+});
+
 // Ensure uploads folder exists
 const uploadsDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadsDir)) {
@@ -87,10 +93,24 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
+const primaryPort = parseInt(process.env.PORT, 10) || 5000;
+const secondaryPort = 5001;
+
+app.listen(primaryPort, '0.0.0.0', () => {
   console.log(`===================================================`);
-  console.log(` Campus TechCare Backend Server running on port ${PORT}`);
-  console.log(` API Endpoint: http://localhost:${PORT}/api`);
-  console.log(` Health Check: http://localhost:${PORT}/api/health`);
+  console.log(` Campus TechCare Backend Server running on port ${primaryPort}`);
+  console.log(` API Endpoint: http://localhost:${primaryPort}/api`);
+  console.log(` Health Check: http://localhost:${primaryPort}/api/health`);
   console.log(`===================================================`);
 });
+
+// Also bind secondary port if available so frontend can reach either port
+if (primaryPort !== secondaryPort) {
+  try {
+    const http = require('http');
+    const secServer = http.createServer(app);
+    secServer.listen(secondaryPort, '0.0.0.0', () => {
+      console.log(` Also listening on dual port ${secondaryPort} (http://localhost:${secondaryPort})`);
+    }).on('error', () => {});
+  } catch (e) {}
+}
